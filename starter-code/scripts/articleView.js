@@ -48,7 +48,7 @@ articleView.handleCategoryFilter = function() {
       $('article').fadeIn();
       $('article.template').hide();
     }
-    $('#category-filter').val('');
+    $('#author-filter').val('');
   });
 };
 
@@ -68,17 +68,13 @@ articleView.handleMainNav = function () {
 articleView.setTeasers = function() {
   // Truncate logic to show only first two elements within the article body.
   $('.article-body *:nth-of-type(n+2)').hide();
-  $('.read-on').on('click', 'a', function(event) {
+
+  $('#articles').on('click', 'a.read-on', function(event) {
     event.preventDefault();
-    // $('a .read-on').text() === 'Read On';
-    $('.article-body *:nth-of-type(n+2)').fadeIn();
-    $('a .read-on').text('Show Less');
-    // } else {
-    //   $('.article-body *:nth-of-type(n+2)').hide();
-    //   $('a .read-on').text('Read On');
-    // }
+    $(this).parent().find('*').fadeIn();
+    $(this).hide()
   });
-  /* TODO: Add a delegated event handler to reveal the remaining paragraphs.
+  /* DONE: Add a delegated event handler to reveal the remaining paragraphs.
     When a .read-on link is clicked, we can:
     [x]1. Prevent the default action of a link.
     [x]2. Reveal everything in that particular article now.
