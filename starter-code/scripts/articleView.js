@@ -1,4 +1,4 @@
-//  REVIEW: Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
+//  DONE: Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
 var articleView = {};
 
 articleView.populateFilters = function() {
@@ -18,13 +18,17 @@ articleView.populateFilters = function() {
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
     if ($(this).val()) {
-      /* TODO: If the select box changes to an option that has a value, we should:
-          1. Hide all of the articles
-          2. Fade in only the articles that match based on on the author
-            that was aselected. Hint: use an attribute selector to find
-            those articles that match the value, and then fade them in.
-        */
+      $('article').hide();
+      $('article[data-author="' + $(this.val() + '"]').fadeIn();
     } else {
+      $('article').fadeIn();
+      $('article.template').hide();
+      /* DONE: If the select box changes to an option that has a value, we should:
+      [x]1. Hide all of the articles
+      [x]2. Fade in only the articles that match based on on the author
+      that was aselected. Hint: use an attribute selector to find
+      those articles that match the value, and then fade them in.
+      */
     /* Otherwise, we should:
         1. Show all the articles except the template */
     }
@@ -33,16 +37,28 @@ articleView.handleAuthorFilter = function() {
 };
 
 articleView.handleCategoryFilter = function() {
-  /* TODO: Just like we do for #author-filter above, we should also handle
+  /* DONE: Just like we do for #author-filter above, we should also handle
   change events on the #category-filter element. Be sure to reset the
   #author-filter while you're at it! */
+  $('#category-filter').on('change', function() {
+    if ($(this).val()) {
+      $('article').hide();
+      $('article[data-category="' + $(this.val() + '"]').fadeIn();
+    } else {
+      $('article').fadeIn();
+      $('article.template').hide();
+    }
+    $('#category-filter').val('');
+  });
 };
 
 articleView.handleMainNav = function () {
   $('.main-nav').on('click', '.tab', function() {
-    /* TODO:
-      1. Hide all of the .tab-content sections
-      2. Fade in the single .tab-content section that is
+    $('.tab-content').hide();
+    $('#' + $(this).data('content')).fadeIn();
+    /* DONE
+      [x]1. Hide all of the .tab-content sections
+      [x]2. Fade in the single .tab-content section that is
         associated with the .tab element's data-content attribute.
     */
   });
@@ -62,4 +78,9 @@ articleView.setTeasers = function() {
   */
 };
 
-// TODO: Invoke all of the above functions (I mean, methods!):
+// DONE: Invoke all of the above functions (I mean, methods!):
+articleView.populateFilters();
+articleView.handleAuthorFilter();
+articleView.handleCategoryFilter();
+articleView.handleMainNav();
+// articleView.setTeasers();
