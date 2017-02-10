@@ -19,7 +19,7 @@ articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
     if ($(this).val()) {
       $('article').hide();
-      $('article[data-author="' + $(this.val() + '"]').fadeIn();
+      $('article[data-author="' + $(this.val() + '"]')).fadeIn();
     } else {
       $('article').fadeIn();
       $('article.template').hide();
@@ -43,7 +43,7 @@ articleView.handleCategoryFilter = function() {
   $('#category-filter').on('change', function() {
     if ($(this).val()) {
       $('article').hide();
-      $('article[data-category="' + $(this.val() + '"]').fadeIn();
+      $('article[data-category="' + $(this.val() + '"]')).fadeIn();
     } else {
       $('article').fadeIn();
       $('article.template').hide();
@@ -68,11 +68,22 @@ articleView.handleMainNav = function () {
 articleView.setTeasers = function() {
   // Truncate logic to show only first two elements within the article body.
   $('.article-body *:nth-of-type(n+2)').hide();
+  $('.read-on').on('click', 'a', function(event) {
+    event.preventDefault(function(){
+      if ($('a .read-on').text().val() === 'Read On') {
+        $('.article-body').show();
+        $('a .read-on').text('Show Less');
+      } else {
+        $('.article-body *:nth-of-type(n+2)').hide();
+        $('a .read-on').text('Read On');
+      }
+    });
+  });
   /* TODO: Add a delegated event handler to reveal the remaining paragraphs.
     When a .read-on link is clicked, we can:
-    1. Prevent the default action of a link.
-    2. Reveal everything in that particular article now.
-    3. Hide that read-on link!
+    [x]1. Prevent the default action of a link.
+    [x]2. Reveal everything in that particular article now.
+    [X]3. Hide that read-on link!
 
     // STRETCH GOAl!: change the 'Read On' link to 'Show Less'
   */
@@ -83,4 +94,4 @@ articleView.populateFilters();
 articleView.handleAuthorFilter();
 articleView.handleCategoryFilter();
 articleView.handleMainNav();
-// articleView.setTeasers();
+articleView.setTeasers();
